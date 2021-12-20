@@ -25,8 +25,9 @@ const Player = (name, symbol) => {
     return { getSymbol, getName };
 };
 
-const playerOne = Player('Player One', 'x');
-const playerTwo = Player('Player Two', 'o');
+let playerOne;
+let playerTwo;
+
 
 // module for the gameboard
 const gameBoard = (() => {
@@ -98,7 +99,7 @@ const gameController = (() => {
             let y = gameBoard.getSpot(winningSpots[a][1]);
             let z = gameBoard.getSpot(winningSpots[a][2]);
             if(x == y && x == z && x != ''){
-                console.log('winner');
+                alert('winner!!!');
                 disableBoard();
             }
         }
@@ -140,3 +141,20 @@ resetBtn.addEventListener('click', () => {
 })
 
 gameBoard.populateBoard();
+
+const submitBtn = document.getElementById('submit');
+submitBtn.addEventListener('click', () => {
+    let p1 = document.getElementById('firstPlayer').value;
+    let p2 = document.getElementById('secondPlayer').value;
+    if(p1 == ''){
+        p1 = 'Player One';
+    }
+    if(p2 == ''){
+        p2 = 'Player Two';
+    }
+    playerOne = Player(p1, 'x');
+    playerTwo = Player(p2, 'o');
+    console.log('submit');
+    const moveForm = document.getElementById('formModal');
+    moveForm.classList.add('moveUp');
+});

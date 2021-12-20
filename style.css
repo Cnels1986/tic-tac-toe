@@ -1,3 +1,70 @@
+body{
+    font-family: 'Ubuntu', sans-serif;
+}
+
+#formContainer{
+    position: absolute;
+    background: rgb(200,242,255);
+    background: linear-gradient(74deg, rgba(200,242,255,1) 0%, rgba(0,173,255,1) 74%);
+    height: 350px;
+    width: 50%;
+    margin: 0 auto;
+    left:25%;
+    top: -20px;
+    border: 2px solid black;
+    border-radius: 10px;
+    box-shadow: rgb(38, 57, 77) 0px 20px 30px -10px;
+}
+
+#formModal{
+    z-index: 100;
+    height: 100vh;
+    width: 100%;
+    position: absolute;
+    transition: transform 2s;
+}
+
+.moveUp{
+    transform: translateY(-400px);
+}
+
+#gameContainer{
+    z-index: 1;
+}
+
+form{
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    align-items: center;
+    justify-content: space-evenly;
+}
+
+form > label{
+    font-weight: bold;
+    font-size: 30px;
+}
+
+form > input{
+    height: 30px;
+    width: 300px;
+    text-align: center;
+    border: none;
+    border-radius: 5px;
+    background-color: #d4edff;
+    font-size: 20px;
+}
+
+#submit{
+    height: 50px;
+    width: 140px;
+    font-family: 'Ubuntu', sans-serif;
+    font-size: 20px;
+    border: 2px solid black;
+    border-radius: 5px;
+    background-color: #d4edff;
+}
+
 .spotStyle{
     height: 100px;
     width: 100px;

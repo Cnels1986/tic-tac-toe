@@ -2,16 +2,34 @@
 <html lang="en" dir="ltr">
     <head>
         <meta charset="utf-8">
+        <link rel="stylesheet" href="reset.css">
         <link rel="stylesheet" href="style.css">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;700&display=swap" rel="stylesheet">
         <script src="script.js" charset="utf-8" defer></script>
         <title>Tic Tac Toe - The Odin Project</title>
     </head>
     <body>
-        <h1>Tic Tac Toe</h1>
-        <h3 id="playerTurn"></h3>
-        <div id="gameBoardContainer">
-            <div id="gameBoard"></div>
+        <div id="formModal">
+            <div id="formContainer">
+                <form>
+                    <label for="firstPlayer">Player 1's Name:</label>
+                    <input type="text" name="firstPlayer" placeholder="Player One" maxlength="30" id="firstPlayer">
+                    <label for="secondPlayer">Player 2's Name:</label>
+                    <input type="text" name="secondPlayer" placeholder="Player Two" maxlength="30" id="secondPlayer">
+                    <button type="button" name="submit" id="submit">Submit</button>
+                </form>
+            </div>
         </div>
-        <button type="button" name="reset" id="reset">Reset</button>
+
+        <div id="gameContainer">
+            <h1>Tic Tac Toe</h1>
+            <h3 id="playerTurn"></h3>
+            <div id="gameBoardContainer">
+                <div id="gameBoard"></div>
+            </div>
+            <button type="button" name="reset" id="reset">Reset</button>
+        </div>
     </body>
 </html>
