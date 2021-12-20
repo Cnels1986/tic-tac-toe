@@ -17,23 +17,23 @@
 // 2,4,6
 
 // factory function for the player
-const Player = (sym) => {
+const Player = (name, symbol) => {
 
-    const getSymbol = () => sym;
+    const getSymbol = () => symbol;
+    const getName = () => name;
 
-    return {getSymbol};
+    return { getSymbol, getName };
 };
+
+const playerOne = Player('Player One', 'x');
+const playerTwo = Player('Player Two', 'o');
 
 // module for the gameboard
 const gameBoard = (() => {
-
-    // const board = ['x','x','o','o','x','o','o','x','x'];
-    // const board = [0,1,2,3,4,5,6,7,8];
     const board = ['','','','','','','','',''];
     const boardDiv = document.getElementById('gameBoard');
 
     function populateBoard(){
-
         board.forEach((spot, i) => {
             const spotDiv = document.createElement('div');
             spotDiv.classList.add('spotStyle');
@@ -41,7 +41,8 @@ const gameBoard = (() => {
             spotDiv.setAttribute('data-index', i);
             spotDiv.addEventListener('click', () => {
                 console.log(spotDiv.dataset.index);
-                setSpot('x', spotDiv.dataset.index);
+                setSpot(gameController.getPlayerSymbol(), spotDiv.dataset.index);
+                gameController.togglePlayer();
             });
             boardDiv.appendChild(spotDiv);
         });
@@ -52,6 +53,7 @@ const gameBoard = (() => {
         const test = document.querySelector("[data-index='" + index + "']");
         test.textContent = val;
         test.classList.add('disable');
+        gameController.checkVictory();
     }
 
     function getSpot(a){
@@ -65,6 +67,7 @@ const gameBoard = (() => {
         while(boardDiv.firstChild){
             boardDiv.removeChild(boardDiv.firstChild);
         }
+        // gameController.restart();
         populateBoard();
     }
 
@@ -79,12 +82,61 @@ const gameBoard = (() => {
 
 // module for the game controller
 const gameController = (() => {
+    // player 1 = true
+    // player 2 = false
+    let playerTurn = true;
+    const winningSpots = [
+        [0,1,2],[3,4,5],
+        [6,7,8],[0,3,6],
+        [1,4,7],[2,5,8],
+        [0,4,8],[2,4,8]
+    ];
 
     function checkVictory(){
-        console.log('checking for victory');
+        for(let a = 0; a < 8; a++){
+            let x = gameBoard.getSpot(winningSpots[a][0]);
+            let y = gameBoard.getSpot(winningSpots[a][1]);
+            let z = gameBoard.getSpot(winningSpots[a][2]);
+            if(x == y && x == z && x != ''){
+                console.log('winner');
+                disableBoard();
+            }
+        }
     }
 
-    return { checkVictory };
+    function togglePlayer(){
+        playerTurn = !playerTurn;
+    }
+
+    function showTurn(){
+        return playerTurn;
+    }
+
+    function getPlayerSymbol(){
+        if(showTurn() == true){
+            return playerOne.getSymbol();
+        } else{
+            return playerTwo.getSymbol();
+        }
+    }
+
+    function disableBoard(){
+        playerTurn = true;
+        let spots = document.getElementsByClassName('spotStyle');
+        for(let a = 0; a < 9; a++){
+            spots[a].classList.add('disable');
+        }
+    }
+
+    return { checkVictory, togglePlayer, showTurn, getPlayerSymbol };
 })();
+
+const resetBtn = document.getElementById('reset');
+resetBtn.addEventListener('click', () => {
+    gameBoard.reset();
+    if(gameController.getPlayerSymbol() == 'o'){
+        gameController.togglePlayer();
+    }
+})
 
 gameBoard.populateBoard();

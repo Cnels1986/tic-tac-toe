@@ -13,7 +13,3 @@
 .disable{
     pointer-events: none;
 }
-
-.enable{
-    pointer-events: auto;
-}
