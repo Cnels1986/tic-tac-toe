@@ -41,6 +41,7 @@ const gameBoard = (() => {
             spotDiv.setAttribute('data-index', i);
             spotDiv.addEventListener('click', () => {
                 console.log(spotDiv.dataset.index);
+                setSpot('x', spotDiv.dataset.index);
             });
             boardDiv.appendChild(spotDiv);
         });
@@ -58,11 +59,23 @@ const gameBoard = (() => {
     }
 
     function reset(){
-        console.log('resetting board');
+        for(let a = 0; a < 9; a++){
+            board[a] = '';
+        }
+        while(boardDiv.firstChild){
+            boardDiv.removeChild(boardDiv.firstChild);
+        }
+        populateBoard();
     }
 
-    return { populateBoard, setSpot, getSpot, reset };
+    // delete
+    function showBoard(){
+        console.log(board);
+    }
+
+    return { populateBoard, setSpot, getSpot, reset, showBoard };
 })();
+
 
 // module for the game controller
 const gameController = (() => {
@@ -73,3 +86,5 @@ const gameController = (() => {
 
     return { checkVictory };
 })();
+
+gameBoard.populateBoard();
