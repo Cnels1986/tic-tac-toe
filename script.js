@@ -27,14 +27,30 @@ const Player = (sym) => {
 // module for the gameboard
 const gameBoard = (() => {
 
-    const board = ['x','x','o','o','x','o','o','x','x'];
+    // const board = ['x','x','o','o','x','o','o','x','x'];
+    // const board = [0,1,2,3,4,5,6,7,8];
+    const board = ['','','','','','','','',''];
+    const boardDiv = document.getElementById('gameBoard');
 
     function populateBoard(){
-        console.log('populating board');
-    }
 
-    function setSpot(a){
-        console.log('setting spot value');
+        board.forEach((spot, i) => {
+            const spotDiv = document.createElement('div');
+            spotDiv.classList.add('spotStyle');
+            spotDiv.textContent = spot;
+            spotDiv.setAttribute('data-index', i);
+            spotDiv.addEventListener('click', () => {
+                console.log(spotDiv.dataset.index);
+            });
+            boardDiv.appendChild(spotDiv);
+        });
+    };
+
+    function setSpot(val, index){
+        board[index] = val;
+        const test = document.querySelector("[data-index='" + index + "']");
+        test.textContent = val;
+        test.classList.add('disable');
     }
 
     function getSpot(a){

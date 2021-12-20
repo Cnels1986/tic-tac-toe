@@ -1,0 +1,19 @@
+.spotStyle{
+    height: 100px;
+    width: 100px;
+    border: 2px solid black;
+}
+
+#gameBoard{
+    display: grid;
+    grid-template-columns: 100px 100px 100px;
+    grid-template-rows: 100px 100px 100px
+}
+
+.disable{
+    pointer-events: none;
+}
+
+.enable{
+    pointer-events: auto;
+}
