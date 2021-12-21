@@ -27,7 +27,7 @@ const Player = (name, symbol) => {
 
 let playerOne;
 let playerTwo;
-
+const messageDisplay = document.getElementById('messageDisplay');
 
 // module for the gameboard
 const gameBoard = (() => {
@@ -68,16 +68,9 @@ const gameBoard = (() => {
         while(boardDiv.firstChild){
             boardDiv.removeChild(boardDiv.firstChild);
         }
-        // gameController.restart();
         populateBoard();
     }
-
-    // delete
-    function showBoard(){
-        console.log(board);
-    }
-
-    return { populateBoard, setSpot, getSpot, reset, showBoard };
+    return { populateBoard, setSpot, getSpot, reset };
 })();
 
 
@@ -155,6 +148,7 @@ submitBtn.addEventListener('click', () => {
     playerOne = Player(p1, 'x');
     playerTwo = Player(p2, 'o');
     console.log('submit');
-    const moveForm = document.getElementById('formModal');
+    const moveForm = document.getElementById('formContainer');
     moveForm.classList.add('moveUp');
+    document.getElementById('formModal').classList.add('hide');
 });
