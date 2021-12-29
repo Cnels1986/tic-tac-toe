@@ -126,6 +126,10 @@ form > input{
     padding: 60px 0px 10px;
 }
 
+.winning{
+    color: red;
+}
+
 footer{
     text-align: center;
 }

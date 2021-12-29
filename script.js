@@ -23,10 +23,7 @@ const gameBoard = (() => {
             spotDiv.textContent = spot;
             spotDiv.setAttribute('data-index', i);
             spotDiv.addEventListener('click', () => {
-                // gameController.getMessage();
                 setSpot(gameController.getPlayerSymbol(), spotDiv.dataset.index);
-                gameController.togglePlayer();
-                gameController.getMessage();
             });
             boardDiv.appendChild(spotDiv);
         });
@@ -37,8 +34,6 @@ const gameBoard = (() => {
         const test = document.querySelector("[data-index='" + index + "']");
         test.textContent = val;
         test.classList.add('disable');
-        // gameController.getMessage();
-        gameController.addTurn();
         gameController.checkVictory();
     }
     // returns value of given spot
@@ -56,7 +51,12 @@ const gameBoard = (() => {
         gameController.reset();
         populateBoard();
     }
-    return { populateBoard, setSpot, getSpot, reset };
+
+    function showVictory(num){
+        const spot = document.querySelector("[data-index='" + num + "']");
+        spot.classList.add('winning');
+    }
+    return { populateBoard, setSpot, getSpot, reset, showVictory };
 })();
 
 // module for the game controller
@@ -64,7 +64,6 @@ const gameController = (() => {
     // player 1 = true
     // player 2 = false
     let playerTurn = true;
-    let moveCounter = 0;
 
     const winningSpots = [
         [0,1,2],[3,4,5],
@@ -74,14 +73,6 @@ const gameController = (() => {
     ];
 
     function checkVictory(){
-        console.log('check victory');
-        console.log(moveCounter);
-        if(moveCounter >=  9){
-            alert('Tie...');
-            messageDisplay.textContent = "Tie...";
-            disableBoard();
-        }
-        else {
             for(let a = 0; a < 8; a++){
                 let x = gameBoard.getSpot(winningSpots[a][0]);
                 let y = gameBoard.getSpot(winningSpots[a][1]);
@@ -95,9 +86,26 @@ const gameController = (() => {
                         messageDisplay.textContent = playerTwo.getName() + ' won!';
                     }
                     disableBoard();
+                    gameBoard.showVictory(winningSpots[a][0]);
+                    gameBoard.showVictory(winningSpots[a][1]);
+                    gameBoard.showVictory(winningSpots[a][2]);
+                    return;
                 }
             }
-        }
+            let moves = 0;
+            for(let a = 0; a < 9; a++){
+                if(gameBoard.getSpot(a) != ''){
+                    moves++;
+                }
+            }
+            if(moves == 9){
+                alert('Tie...');
+               messageDisplay.textContent = "Tie...";
+               disableBoard();
+               return;
+            }
+            togglePlayer();
+            getMessage();
     }
 
     function togglePlayer(){
@@ -135,14 +143,9 @@ const gameController = (() => {
 
     function reset(){
         playerTurn = true;
-        moveCounter = 0;
     }
 
-    function addTurn(){
-        moveCounter++;
-    }
-
-    return { checkVictory, togglePlayer, showTurn, getPlayerSymbol, getMessage, reset, addTurn };
+    return { checkVictory, togglePlayer, showTurn, getPlayerSymbol, getMessage, reset };
 })();
 
 const resetBtn = document.getElementById('reset');
